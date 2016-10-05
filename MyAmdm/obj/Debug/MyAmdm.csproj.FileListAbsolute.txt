@@ -68,3 +68,6 @@ C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Deb
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.Migration2.resources
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.MigrateDB.resources
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.Migrate3.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.dll
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.pdb
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.xml
