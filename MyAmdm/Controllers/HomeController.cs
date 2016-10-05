@@ -2,6 +2,8 @@
 using MyAmdm.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -13,11 +15,31 @@ namespace MyAmdm.Controllers
     {
         SongContext db = new SongContext();
 
+        private SqlConnection connect = null;
+
+        public void OpenConnection(string connectionString) //Открытие соединения с БД
+        {
+            connect = new SqlConnection(connectionString);
+            connect.Open();
+        }
+
+        public void CloseConnection()   //Закрытие соединения с БД
+        {
+            connect.Close();
+        }
+
+        public void InsertDataInDB() {
+
+        }
+
         public ActionResult Index()
         {
             IEnumerable<Author> authors = db.Authors;
             ViewBag.Authors = authors;
-            ParseInformation();
+
+            /////////////////////////////Работа с БД, переделать на кнопку
+            saveParseInformationToDB(ParseInformation());
+            ////////////////////////////
             return View();
         }
 
@@ -54,7 +76,7 @@ namespace MyAmdm.Controllers
 
             // Собственно, здесь и производится выборка интересующих нодов
             // В данном случае выбираем блочные элементы с классом eTitle
-            HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td[@class='artist_name']");
+            HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td[@class='artist_name']/a");
 
             if (NoAltElements != null)
             {
@@ -67,6 +89,33 @@ namespace MyAmdm.Controllers
             return authorNames;
         }
 
+        public void saveParseInformationToDB(List<string> authorNames)
+        {
+            
+            string connectionString = ConfigurationManager.ConnectionStrings["SongContext"].ToString();
+            OpenConnection(connectionString);
+            string sql = "";
+            foreach (var name in authorNames) {
+                   sql += string.Format("Insert Into Authors" +
+                   " Values(N'" + name + "', null);");
+            }
+            
+
+            using (SqlCommand cmd = new SqlCommand(sql, this.connect))
+            {
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    Exception error = new Exception("SQL error", ex);
+                    throw error;
+                }
+            }
+
+            CloseConnection();
+        }
         
 
         [HttpGet]
