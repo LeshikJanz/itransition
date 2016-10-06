@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MyAmdm.Controllers
 {
+
     public class HomeController : Controller
     {
         SongContext context = new SongContext();
@@ -18,6 +19,7 @@ namespace MyAmdm.Controllers
         public ActionResult Index()
         {
             //ParseAuthorBiographyFromAmdm(ParseAuthorBiographyLinksFromAmdm());
+            ParserSongsFromAmdm(ParseAuthorBiographyLinksFromAmdm());
             return View();
         }
 
@@ -178,6 +180,38 @@ namespace MyAmdm.Controllers
             return authorNames;
         }
 
+        public string[,] ParserSongsFromAmdm(List<string> AuthorLinks)  //считывает все песни
+        {
+            List<string> songLinks = new List<string>();
+            string[,] songNames = new string[100,3000];
+            string htmlUrl = "";
+            HtmlDocument HD = new HtmlDocument();
+            var web = new HtmlWeb
+            {
+                AutoDetectEncoding = false,
+                OverrideEncoding = Encoding.UTF8,
+            };
+            int i = 1; 
+            foreach (var authorLink in AuthorLinks)
+            {
+                htmlUrl = "http:" + authorLink;
+                HD = web.Load(htmlUrl);
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td/a");
+                if (NoAltElements != null)
+                {
+                    bool flag = true; //выбираем каждый второй
+                    int j = 1;
+                    foreach (HtmlNode HN in NoAltElements)
+                    {
+                        string outputText = HN.InnerText;
+                        songNames[i,j++] = outputText; //добавление имени в список
+                    }
+                }
+                i++;
+            }
+            return songNames;
+        }
+
         public void CleanDbRequest()
         {
             foreach (var author in context.Authors)
@@ -191,7 +225,7 @@ namespace MyAmdm.Controllers
         {
             int i = 0;
             //while (authorNames[i] != authorNames.Last() || authorLinks[i] != authorLinks.Last())
-            while(i != 60)
+            while(i != 350)
             {
                 Author author = new Author
                 {
