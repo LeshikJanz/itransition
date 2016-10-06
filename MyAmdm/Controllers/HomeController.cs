@@ -19,18 +19,27 @@ namespace MyAmdm.Controllers
         List<string> authorBiography = new List<string>();
         List<string> authorNames = new List<string>();
 
+        List<Author> authors = new List<Author>();
         List<Song> songs = new List<Song>();
 
         List<string> songLinks = new List<string>();
+        List<string> songLyrics = new List<string>();
         string[,] songNames = new string[100,3000]; //[id-автора, список песен - также номер, это id-песни]
 
 
         public ActionResult Index()
         {
             //ParseAuthorBiographyFromAmdm(ParseAuthorBiographyLinksFromAmdm());
+
             ParseAuthorBiographyLinksFromAmdm();
-            ParserSongUrl();
-            ParserSongsFromAmdm();
+            ParseAuthorNamesFromAmdm();
+            ParseAuthorBiographyFromAmdm();
+            ParseSongLinks();
+            ParseSongLyrics();
+            
+
+            GenerateSongsListOfModels();
+            GenerateAuthorListOfModels();
             return View();
         }
 
@@ -41,6 +50,21 @@ namespace MyAmdm.Controllers
             ViewBag.Authors = authors; //Сделать передачу через модель
             
             return PartialView();
+        }
+
+        public List<Author> GenerateAuthorListOfModels()
+        {
+            int i = 1;
+            foreach (var authorName in authorNames)
+            {
+                Author author = new Author();
+                author.AuthorId = i;
+                author.Name = authorNames[i];
+                author.Biography = authorBiography[i];
+                author.LinkOfBiography = authorBiographyLinks[i];
+                i++;
+            }
+            return authors;
         }
 
         /*[HttpGet]
@@ -65,10 +89,46 @@ namespace MyAmdm.Controllers
         
 
         public void ParseAndSaveHandler() {  // ?????? как назвать такую функцию
-            SaveParseInformationToDb(ParseAuthorNamesFromAmdm(), ParseAuthorBiographyLinksFromAmdm(), ParseAuthorBiographyFromAmdm(ParseAuthorBiographyLinksFromAmdm())); //тут еще страшно, но это будет работать только один раз, чтобы пропарсить все
+            //SaveParseInformationToDb(ParseAuthorNamesFromAmdm(), ParseAuthorBiographyLinksFromAmdm(), ParseAuthorBiographyFromAmdm(ParseAuthorBiographyLinksFromAmdm())); //тут еще страшно, но это будет работать только один раз, чтобы пропарсить все
         }
 
-        public List<string> ParseAuthorBiographyFromAmdm(List<string> AuthorLinks)
+        public List<string> ParseSongLyrics()
+        {
+
+            string htmlUrl = "";
+
+            HtmlDocument HD = new HtmlDocument();
+            var web = new HtmlWeb
+            {
+                AutoDetectEncoding = false,
+                OverrideEncoding = Encoding.UTF8,
+            };
+
+            foreach (var authorLink in songLinks)
+            {
+                htmlUrl = "http:" + authorLink;
+                HD = web.Load(htmlUrl);
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//div/pre");
+                if (NoAltElements != null)
+                {
+                    bool flag = true; //выбираем каждый второй
+                    foreach (HtmlNode HN in NoAltElements)
+                    {
+                        string outputText = HN.InnerHtml;
+                        if (flag) // считываем каждый второй
+                        {
+                            songLyrics.Add(outputText); //добавление имени в список
+                            flag = false;
+                            continue;
+                        }
+                        flag = true;
+                    }
+                }
+            }
+            return songLyrics;
+        }
+
+        public List<string> ParseAuthorBiographyFromAmdm()
         {
             
             string htmlUrl = "";
@@ -80,7 +140,7 @@ namespace MyAmdm.Controllers
                 OverrideEncoding = Encoding.UTF8,
             };
 
-            foreach (var authorLink in AuthorLinks)
+            foreach (var authorLink in authorBiographyLinks)
             {
                 htmlUrl = "http:" + authorLink;
                 HD = web.Load(htmlUrl);
@@ -191,7 +251,7 @@ namespace MyAmdm.Controllers
             return authorNames;
         }
 
-        public List<string> ParserSongUrl()
+        public List<string> ParseSongLinks()
         {
 
             string htmlUrl = "";
@@ -227,7 +287,7 @@ namespace MyAmdm.Controllers
             return songLinks;
         }
 
-        public List<Song> ParserSongsFromAmdm()  //считывает все песни
+        public List<Song> GenerateSongsListOfModels()  //считывает все песни
         {
             string htmlUrl = "";
             HtmlDocument HD = new HtmlDocument();
@@ -252,7 +312,8 @@ namespace MyAmdm.Controllers
                         song.AuthorId = i;
                         song.SongId = j;
                         song.Name = outputText;
-                        song.LinkOfSong = "http:" + songLinks[j++];
+                        song.LinkOfSong = "http:" + songLinks[j];
+                        song.lyric = songLyrics[j++];
                         songs.Add(song);
                     }
                 }
