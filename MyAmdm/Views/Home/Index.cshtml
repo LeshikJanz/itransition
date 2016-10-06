@@ -3,21 +3,20 @@
 }
 
 
-    <div>
-        <h3>Популярные группы</h3>
-        <table>
-            <tr>
-                <td><p><b><a href=""></a>Имя группы</b></p></td>
-                <td><p style="margin-left:40%"><b>Биография</b></p></td>
-                <td></td>
-            </tr>
-            @foreach (var b in ViewBag.Authors)
-            {
-                <tr>
-                    <td><p><a href="/Home/OpenAuthorSongList/@b.AuthorId">@b.Name</a></p></td>
-                    <td><p>@b.Biography</p></td>
-                </tr>
-            }
-        </table>
-    </div>
 
+
+        <div>
+            @using (Ajax.BeginForm("ParseAndSaveHandler", new AjaxOptions { UpdateTargetId = "results" }))
+            {
+                <input type="submit" value="Считать и пропарсить данные" />
+            }
+            @using (Ajax.BeginForm("ShowAuthorsInformationPartial", new AjaxOptions { UpdateTargetId = "results" }))
+            {
+                <input type="submit" value="Подгрузить данные" />
+            }
+            @using (Ajax.BeginForm("CleanDbRequest", new AjaxOptions { UpdateTargetId = "results" }))
+            {
+                <input type="submit" value="Очистить таблицу" />
+            }
+            <div id="results"></div>
+        </div>

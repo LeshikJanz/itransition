@@ -35,16 +35,23 @@ namespace MyAmdm.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<Author> authors = db.Authors;
-            ViewBag.Authors = authors;
+            //IEnumerable<Author> authors = db.Authors;
+            //ViewBag.Authors = authors;
 
             /////////////////////////////Работа с БД, переделать на кнопку
-            saveParseInformationToDB(ParseInformationFromAmdm());
+            //saveParseInformationToDB(ParseInformationFromAmdm());
             ////////////////////////////
             return View();
         }
 
-        [HttpGet]
+        public ActionResult ShowAuthorsInformationPartial()  //Обработчик кнопки "Подгрузить данные". Вычитываем информацию из базы данных
+        {
+            IEnumerable<Author> authors = db.Authors; //
+            ViewBag.Authors = authors; //Сделать передачу через модель
+            return PartialView();
+        }
+
+        /*[HttpGet]
         public ActionResult OpenAuthorSongList(int id)
         {
             IEnumerable<Song> songs = db.Songs;
@@ -61,6 +68,14 @@ namespace MyAmdm.Controllers
             ViewBag.Songs = choicedSongs;
 
             return View();
+        }*/
+
+        
+
+        public void ParseAndSaveHandler() {  // ?????? как назвать такую функцию
+
+            string sqlRequest = GenerateAuthorInformationSqlRequest(ParseInformationFromAmdm());
+            ExecuteSQL(sqlRequest);
         }
 
         public List<string> ParseInformationFromAmdm()
@@ -91,19 +106,30 @@ namespace MyAmdm.Controllers
             return authorNames;
         }
 
-        public void saveParseInformationToDB(List<string> authorNames)
+        public void CleanDbRequest()
         {
+            string sql = string.Format("DELETE FROM AUTHORS");
+            ExecuteSQL(sql);
+            ShowAuthorsInformationPartial();
+        }
 
-            string connectionString = ConfigurationManager.ConnectionStrings["SongContext"].ToString();
-            OpenConnection(connectionString);
+        public string GenerateAuthorInformationSqlRequest(List<string> authorNames)
+        {
             string sql = "";
             foreach (var name in authorNames)
             {
                 sql += string.Format("Insert Into Authors" +
                 " Values(N'" + name + "', null);");
             }
+            return sql;
+        }
 
+        public void ExecuteSQL(string sql)
+        {
 
+            string connectionString = ConfigurationManager.ConnectionStrings["SongContext"].ToString();
+            OpenConnection(connectionString);
+            
             using (SqlCommand cmd = new SqlCommand(sql, this.connect))
             {
                 try
@@ -121,7 +147,7 @@ namespace MyAmdm.Controllers
         }
 
 
-        [HttpGet]
+        /*[HttpGet]
         public ActionResult OpenSongLyric(int id)
         {
             IEnumerable<Song> songs = db.Songs;
@@ -134,6 +160,6 @@ namespace MyAmdm.Controllers
                 }
             }
             return View();
-        }
+        }*/
     }
 }

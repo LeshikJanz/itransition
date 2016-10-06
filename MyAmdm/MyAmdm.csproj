@@ -241,6 +241,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\OpenSongLyric.cshtml" />
     <Content Include="Views\Home\OpenAuthorSongList.cshtml" />
+    <Content Include="Views\Home\ShowAuthorsInformationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
