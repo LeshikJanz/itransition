@@ -5,19 +5,20 @@
 <script>
     function WaitFunction()
     {
-        $('.box').html("Загрузка")
-        setTimeout(function () { $('.box').fadeIn('fast') }, 10);
-        setTimeout(function () { $('.box').fadeOut('fast') }, 4000);
+        $('.mybox').html("Загрузка..")
+        setTimeout(function () { $('.mybox').fadeIn('fast') }, 10);
+        setTimeout(function () { $('.mybox').fadeOut('fast') }, 4000);
     }
 
 </script>
 
-        <div class="box" style="display:none" ></div>
+           <br /><br /><br />
+        <div class="mybox" style="display:none" ></div>
         <div>
-            @using (Ajax.BeginForm("ParseAndSaveHandler", new AjaxOptions {  UpdateTargetId = "results" }))
+            <!--@using (Ajax.BeginForm("ParseAndSaveHandler", new AjaxOptions {  UpdateTargetId = "results" }))
             {
                 <input type="submit" value="Считать и пропарсить данные" onclick="WaitFunction()" />
-            }
+            }-->
             @using (Ajax.BeginForm("ShowAuthorsInformationPartial", new AjaxOptions { UpdateTargetId = "results" }))
             {
                 <input type="submit" value="Подгрузить данные" onclick="WaitFunction()"/>

@@ -13,41 +13,19 @@ namespace MyAmdm.Controllers
 {
     public class HomeController : Controller
     {
-        SongContext db = new SongContext();
-
-        private SqlConnection connect = null;
-
-        public void OpenConnection(string connectionString) //Открытие соединения с БД
-        {
-            connect = new SqlConnection(connectionString);
-            connect.Open();
-        }
-
-        public void CloseConnection()   //Закрытие соединения с БД
-        {
-            connect.Close();
-        }
-
-        public void InsertDataInDB()
-        {
-
-        }
+        SongContext context = new SongContext();
 
         public ActionResult Index()
         {
-            //IEnumerable<Author> authors = db.Authors;
-            //ViewBag.Authors = authors;
-
-            /////////////////////////////Работа с БД, переделать на кнопку
-            //saveParseInformationToDB(ParseInformationFromAmdm());
-            ////////////////////////////
             return View();
         }
 
         public ActionResult ShowAuthorsInformationPartial()  //Обработчик кнопки "Подгрузить данные". Вычитываем информацию из базы данных
         {
-            IEnumerable<Author> authors = db.Authors; //
+            ParseAndSaveHandler();
+            IEnumerable<Author> authors = context.Authors; //
             ViewBag.Authors = authors; //Сделать передачу через модель
+            
             return PartialView();
         }
 
@@ -73,8 +51,7 @@ namespace MyAmdm.Controllers
         
 
         public void ParseAndSaveHandler() {  // ?????? как назвать такую функцию
-            string sqlRequest = GenerateAuthorInformationSqlRequest(ParseInformationFromAmdm());
-            ExecuteSQL(sqlRequest);
+            SaveParseInformationToDb(ParseInformationFromAmdm());
         }
 
         public List<string> ParseInformationFromAmdm()
@@ -107,42 +84,25 @@ namespace MyAmdm.Controllers
 
         public void CleanDbRequest()
         {
-            string sql = string.Format("DELETE FROM AUTHORS");
-            ExecuteSQL(sql);
-            ShowAuthorsInformationPartial();
+            foreach (var author in context.Authors)
+            {
+               context.Authors.Remove(author);
+            }
+            context.SaveChanges();
         }
 
-        public string GenerateAuthorInformationSqlRequest(List<string> authorNames)
+        public void SaveParseInformationToDb(List<string> authorNames)
         {
-            string sql = "";
-            foreach (var name in authorNames)
+            foreach ( var name in authorNames)
             {
-                sql += string.Format("Insert Into Authors" +
-                " Values(N'" + name + "', null);");
-            }
-            return sql;
-        }
-
-        public void ExecuteSQL(string sql)
-        {
-
-            string connectionString = ConfigurationManager.ConnectionStrings["SongContext"].ToString();
-            OpenConnection(connectionString);
-            
-            using (SqlCommand cmd = new SqlCommand(sql, this.connect))
-            {
-                try
+                Author author = new Author
                 {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException ex)
-                {
-                    Exception error = new Exception("SQL error", ex);
-                    throw error;
-                }
+                    Name = name
+                };
+            context.Authors.Add(author);
             }
 
-            CloseConnection();
+            context.SaveChanges();
         }
 
 
