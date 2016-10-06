@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201610061220242_AddEntityDependenciesInModelsLastOne.Designer.cs">
       <DependentUpon>201610061220242_AddEntityDependenciesInModelsLastOne.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610061306131_NewFieldsOfAuthor.cs" />
+    <Compile Include="Migrations\201610061306131_NewFieldsOfAuthor.Designer.cs">
+      <DependentUpon>201610061306131_NewFieldsOfAuthor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accord.cs" />
     <Compile Include="Models\Author.cs" />
@@ -357,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610061220242_AddEntityDependenciesInModelsLastOne.resx">
       <DependentUpon>201610061220242_AddEntityDependenciesInModelsLastOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061306131_NewFieldsOfAuthor.resx">
+      <DependentUpon>201610061306131_NewFieldsOfAuthor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
