@@ -12,6 +12,7 @@ namespace MyAmdm.Models
         public int SongId { get; set; }
         public string Name { get; set; }
         public string lyric { get; set; }
+        public string LinkOfSong { get; set; }
         public int NumberOfView { get; set; }
         [Key]
         [ForeignKey("AuthorOf")]

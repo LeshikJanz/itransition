@@ -15,11 +15,22 @@ namespace MyAmdm.Controllers
     public class HomeController : Controller
     {
         SongContext context = new SongContext();
+        List<string> authorBiographyLinks = new List<string>();
+        List<string> authorBiography = new List<string>();
+        List<string> authorNames = new List<string>();
+
+        List<Song> songs = new List<Song>();
+
+        List<string> songLinks = new List<string>();
+        string[,] songNames = new string[100,3000]; //[id-автора, список песен - также номер, это id-песни]
+
 
         public ActionResult Index()
         {
             //ParseAuthorBiographyFromAmdm(ParseAuthorBiographyLinksFromAmdm());
-            ParserSongsFromAmdm(ParseAuthorBiographyLinksFromAmdm());
+            ParseAuthorBiographyLinksFromAmdm();
+            ParserSongUrl();
+            ParserSongsFromAmdm();
             return View();
         }
 
@@ -59,7 +70,7 @@ namespace MyAmdm.Controllers
 
         public List<string> ParseAuthorBiographyFromAmdm(List<string> AuthorLinks)
         {
-            List<string> authorBiography = new List<string>();
+            
             string htmlUrl = "";
 
             HtmlDocument HD = new HtmlDocument();
@@ -119,7 +130,7 @@ namespace MyAmdm.Controllers
 
         public List<string> ParseAuthorBiographyLinksFromAmdm()
         {
-            List<string> authorBiographyLinks = new List<string>();
+           
             string htmlUrl = "";
             HtmlDocument HD = new HtmlDocument();
             var web = new HtmlWeb
@@ -154,7 +165,7 @@ namespace MyAmdm.Controllers
 
         public List<string> ParseAuthorNamesFromAmdm()
         {
-            List<string> authorNames = new List<string>();
+            
             string htmlUrl = "";
             HtmlDocument HD = new HtmlDocument();
             var web = new HtmlWeb
@@ -180,10 +191,44 @@ namespace MyAmdm.Controllers
             return authorNames;
         }
 
-        public string[,] ParserSongsFromAmdm(List<string> AuthorLinks)  //считывает все песни
+        public List<string> ParserSongUrl()
         {
-            List<string> songLinks = new List<string>();
-            string[,] songNames = new string[100,3000];
+
+            string htmlUrl = "";
+            HtmlDocument HD = new HtmlDocument();
+            var web = new HtmlWeb
+            {
+                AutoDetectEncoding = false,
+                OverrideEncoding = Encoding.UTF8,
+            };
+
+
+                foreach (var link in authorBiographyLinks)
+                {
+                    htmlUrl = "http:" + link;
+                HD = web.Load(htmlUrl);
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td/a[@href]");
+                if (NoAltElements != null)
+                {
+                    bool flag = true; //выбираем каждый второй
+                    foreach (HtmlNode HN in NoAltElements)
+                    {
+                        string outputText = HN.Attributes["href"].Value;
+                        if (flag) // считываем каждый второй
+                        {
+                            songLinks.Add(outputText); //добавление имени в список
+                            flag = false;
+                            continue;
+                        }
+                        flag = true;
+                    }
+                }
+            }
+            return songLinks;
+        }
+
+        public List<Song> ParserSongsFromAmdm()  //считывает все песни
+        {
             string htmlUrl = "";
             HtmlDocument HD = new HtmlDocument();
             var web = new HtmlWeb
@@ -192,24 +237,28 @@ namespace MyAmdm.Controllers
                 OverrideEncoding = Encoding.UTF8,
             };
             int i = 1; 
-            foreach (var authorLink in AuthorLinks)
+            foreach (var authorLink in authorBiographyLinks)
             {
                 htmlUrl = "http:" + authorLink;
                 HD = web.Load(htmlUrl);
                 HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td/a");
                 if (NoAltElements != null)
                 {
-                    bool flag = true; //выбираем каждый второй
                     int j = 1;
                     foreach (HtmlNode HN in NoAltElements)
                     {
                         string outputText = HN.InnerText;
-                        songNames[i,j++] = outputText; //добавление имени в список
+                        Song song = new Song();
+                        song.AuthorId = i;
+                        song.SongId = j;
+                        song.Name = outputText;
+                        song.LinkOfSong = "http:" + songLinks[j++];
+                        songs.Add(song);
                     }
                 }
                 i++;
             }
-            return songNames;
+            return songs;
         }
 
         public void CleanDbRequest()

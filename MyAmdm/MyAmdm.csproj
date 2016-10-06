@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201610061306131_NewFieldsOfAuthor.Designer.cs">
       <DependentUpon>201610061306131_NewFieldsOfAuthor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610061529372_Add parameter LinkOfSong to the Song model.cs" />
+    <Compile Include="Migrations\201610061529372_Add parameter LinkOfSong to the Song model.Designer.cs">
+      <DependentUpon>201610061529372_Add parameter LinkOfSong to the Song model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accord.cs" />
     <Compile Include="Models\Author.cs" />
@@ -364,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610061306131_NewFieldsOfAuthor.resx">
       <DependentUpon>201610061306131_NewFieldsOfAuthor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061529372_Add parameter LinkOfSong to the Song model.resx">
+      <DependentUpon>201610061529372_Add parameter LinkOfSong to the Song model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
