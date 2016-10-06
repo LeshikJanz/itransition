@@ -192,6 +192,30 @@
     <Compile Include="Migrations\201610060711255_Migration12.Designer.cs">
       <DependentUpon>201610060711255_Migration12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610061145103_AddEntityDependenciesInModels.cs" />
+    <Compile Include="Migrations\201610061145103_AddEntityDependenciesInModels.Designer.cs">
+      <DependentUpon>201610061145103_AddEntityDependenciesInModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610061148052_AddEntityDependenciesInModelsTest1.cs" />
+    <Compile Include="Migrations\201610061148052_AddEntityDependenciesInModelsTest1.Designer.cs">
+      <DependentUpon>201610061148052_AddEntityDependenciesInModelsTest1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610061152345_AddEntityDependenciesInModelsTest2.cs" />
+    <Compile Include="Migrations\201610061152345_AddEntityDependenciesInModelsTest2.Designer.cs">
+      <DependentUpon>201610061152345_AddEntityDependenciesInModelsTest2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610061157045_AddEntityDependenciesInModelsTest3.cs" />
+    <Compile Include="Migrations\201610061157045_AddEntityDependenciesInModelsTest3.Designer.cs">
+      <DependentUpon>201610061157045_AddEntityDependenciesInModelsTest3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610061208550_AddEntityDependenciesInModelsTest4.cs" />
+    <Compile Include="Migrations\201610061208550_AddEntityDependenciesInModelsTest4.Designer.cs">
+      <DependentUpon>201610061208550_AddEntityDependenciesInModelsTest4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610061220242_AddEntityDependenciesInModelsLastOne.cs" />
+    <Compile Include="Migrations\201610061220242_AddEntityDependenciesInModelsLastOne.Designer.cs">
+      <DependentUpon>201610061220242_AddEntityDependenciesInModelsLastOne.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accord.cs" />
     <Compile Include="Models\Author.cs" />
@@ -315,6 +339,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610060711255_Migration12.resx">
       <DependentUpon>201610060711255_Migration12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061145103_AddEntityDependenciesInModels.resx">
+      <DependentUpon>201610061145103_AddEntityDependenciesInModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061148052_AddEntityDependenciesInModelsTest1.resx">
+      <DependentUpon>201610061148052_AddEntityDependenciesInModelsTest1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061152345_AddEntityDependenciesInModelsTest2.resx">
+      <DependentUpon>201610061152345_AddEntityDependenciesInModelsTest2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061157045_AddEntityDependenciesInModelsTest3.resx">
+      <DependentUpon>201610061157045_AddEntityDependenciesInModelsTest3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061208550_AddEntityDependenciesInModelsTest4.resx">
+      <DependentUpon>201610061208550_AddEntityDependenciesInModelsTest4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610061220242_AddEntityDependenciesInModelsLastOne.resx">
+      <DependentUpon>201610061220242_AddEntityDependenciesInModelsLastOne.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

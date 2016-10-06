@@ -74,3 +74,9 @@ C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\Htm
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.Migration12.resources
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\System.Net.Http.Formatting.dll
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\System.Net.Http.Formatting.xml
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModels.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModelsTest1.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModelsTest2.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModelsTest3.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModelsTest4.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.AddEntityDependenciesInModelsLastOne.resources
