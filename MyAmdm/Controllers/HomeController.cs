@@ -28,7 +28,8 @@ namespace MyAmdm.Controllers
             connect.Close();
         }
 
-        public void InsertDataInDB() {
+        public void InsertDataInDB()
+        {
 
         }
 
@@ -38,7 +39,7 @@ namespace MyAmdm.Controllers
             ViewBag.Authors = authors;
 
             /////////////////////////////Работа с БД, переделать на кнопку
-            saveParseInformationToDB(ParseInformation());
+            saveParseInformationToDB(ParseInformationFromAmdm());
             ////////////////////////////
             return View();
         }
@@ -53,7 +54,7 @@ namespace MyAmdm.Controllers
                 if (song.AuthorId == id)
                 {
                     choicedSongs.Add(song);
-                    
+
                 }
             }
 
@@ -62,28 +63,29 @@ namespace MyAmdm.Controllers
             return View();
         }
 
-        public List<string> ParseInformation()
+        public List<string> ParseInformationFromAmdm()
         {
             List<string> authorNames = new List<string>();
-            string html = "http://amdm.ru/chords/";
+            string htmlUrl = "";
             HtmlDocument HD = new HtmlDocument();
             var web = new HtmlWeb
             {
                 AutoDetectEncoding = false,
                 OverrideEncoding = Encoding.UTF8,
             };
-            HD = web.Load(html);
 
-            // Собственно, здесь и производится выборка интересующих нодов
-            // В данном случае выбираем блочные элементы с классом eTitle
-            HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td[@class='artist_name']/a");
-
-            if (NoAltElements != null)
+            for (int i = 1; i <= 10; i++)
             {
-                foreach (HtmlNode HN in NoAltElements)
+                htmlUrl = "http://amdm.ru/chords/page" + i;
+                HD = web.Load(htmlUrl);
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td[@class='artist_name']/a");
+                if (NoAltElements != null)
                 {
-                    //Получаем строчки
-                   authorNames.Add(HN.InnerText); //добавление имени в список
+                    foreach (HtmlNode HN in NoAltElements)
+                    {
+                        //Получаем строчки
+                        authorNames.Add(HN.InnerText); //добавление имени в список
+                    }
                 }
             }
             return authorNames;
@@ -91,15 +93,16 @@ namespace MyAmdm.Controllers
 
         public void saveParseInformationToDB(List<string> authorNames)
         {
-            
+
             string connectionString = ConfigurationManager.ConnectionStrings["SongContext"].ToString();
             OpenConnection(connectionString);
             string sql = "";
-            foreach (var name in authorNames) {
-                   sql += string.Format("Insert Into Authors" +
-                   " Values(N'" + name + "', null);");
+            foreach (var name in authorNames)
+            {
+                sql += string.Format("Insert Into Authors" +
+                " Values(N'" + name + "', null);");
             }
-            
+
 
             using (SqlCommand cmd = new SqlCommand(sql, this.connect))
             {
@@ -116,7 +119,7 @@ namespace MyAmdm.Controllers
 
             CloseConnection();
         }
-        
+
 
         [HttpGet]
         public ActionResult OpenSongLyric(int id)

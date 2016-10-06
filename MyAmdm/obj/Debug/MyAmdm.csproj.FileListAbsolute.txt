@@ -71,3 +71,6 @@ C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Deb
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.dll
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.pdb
 C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\HtmlAgilityPack.xml
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\obj\Debug\MyAmdm.Migrations.Migration12.resources
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\System.Net.Http.Formatting.dll
+C:\Users\a2.tereshko\documents\visual studio 2015\Projects\MyAmdm\MyAmdm\bin\System.Net.Http.Formatting.xml
