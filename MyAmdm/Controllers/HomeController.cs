@@ -73,7 +73,6 @@ namespace MyAmdm.Controllers
         
 
         public void ParseAndSaveHandler() {  // ?????? как назвать такую функцию
-
             string sqlRequest = GenerateAuthorInformationSqlRequest(ParseInformationFromAmdm());
             ExecuteSQL(sqlRequest);
         }

@@ -2,17 +2,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    function WaitFunction()
+    {
+        $('.box').html("Загрузка")
+        setTimeout(function () { $('.box').fadeIn('fast') }, 10);
+        setTimeout(function () { $('.box').fadeOut('fast') }, 4000);
+    }
 
+</script>
 
-
+        <div class="box" style="display:none" ></div>
         <div>
-            @using (Ajax.BeginForm("ParseAndSaveHandler", new AjaxOptions { UpdateTargetId = "results" }))
+            @using (Ajax.BeginForm("ParseAndSaveHandler", new AjaxOptions {  UpdateTargetId = "results" }))
             {
-                <input type="submit" value="Считать и пропарсить данные" />
+                <input type="submit" value="Считать и пропарсить данные" onclick="WaitFunction()" />
             }
             @using (Ajax.BeginForm("ShowAuthorsInformationPartial", new AjaxOptions { UpdateTargetId = "results" }))
             {
-                <input type="submit" value="Подгрузить данные" />
+                <input type="submit" value="Подгрузить данные" onclick="WaitFunction()"/>
             }
             @using (Ajax.BeginForm("CleanDbRequest", new AjaxOptions { UpdateTargetId = "results" }))
             {
