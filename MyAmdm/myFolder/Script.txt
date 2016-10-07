@@ -1,0 +1,9 @@
+CREATE TABLE [dbo].[Songs] (
+    [SongId] INT            IDENTITY (1, 1) NOT NULL,
+    [Name]   NVARCHAR (MAX) NULL,
+    [lyric]  NVARCHAR (MAX) NULL,
+	[AuthorId] INT,   
+    CONSTRAINT [PK_dbo.Songs] PRIMARY KEY CLUSTERED ([SongId] ASC),
+	CONSTRAINT [FK_Songs_Authorss] FOREIGN KEY ([AuthorId]) REFERENCES [Authors] ([AuthorId]) ON DELETE SET NULL
+);
+

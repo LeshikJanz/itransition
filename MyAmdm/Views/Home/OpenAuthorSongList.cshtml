@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Amdm.ru</title>
+</head>
+<body>
+    <div>
+        <h3>Популярные группы</h3>
+        <table>
+            <tr>
+                <td><p><b><a href=""></a>Список песен</b></p></td>
+                <td></td>
+            </tr>
+            @foreach (var b in ViewBag.Songs)
+            {
+                <tr>
+                    <td><p><a href="/Home/OpenSongLyric/@b.SongId">@b.Name</a></p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
