@@ -1,0 +1,314 @@
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tokenfield for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery UI CSS -->
+    <link href="css/jquery-ui.css" type="text/css" rel="stylesheet">
+    <!-- Bootstrap styling for Typeahead -->
+    <link href="css/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
+    <!-- Tokenfield CSS -->
+    <link href="css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+    <!-- Docs CSS -->
+    <link href="css/pygments-manni.css" type="text/css" rel="stylesheet">
+    <link href="css/docs.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.min.js"></script>
+    <![endif]-->
+
+  <script type="text/javascript" charset="utf-8" async="" src="https://platform.twitter.com/js/button.c9025956238e7d486d74379e14f50282.js"></script></head>
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-tokenfield.js"></script>
+
+  <body translate="no">
+<br /><br /><br /><br /><br />
+<div class="form-group">
+                  
+                </div>
+<input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+
+                <script type="text/javascript">
+                $('#tokenfield').tokenfield({
+  autocomplete: {
+    source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+    delay: 100
+  },
+  showAutocompleteOnFocus: true
+})
+                </script>
+
+
+
+    <div class="dropdown">
+      <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#">
+                Выберите аккорд <span class="caret"></span>
+            </a>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li class="dropdown-submenu"><a href="#">C</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Cm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Cma7</a></li>
+                <li><a href="#">Cm7</a></li>
+                <li><a href="#">Cm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">C7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">C7+5</a></li>
+                <li><a href="#">C7-5</a></li>
+                <li><a href="#">Cm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">C-</a></li>
+            <li><a href="#">C+</a></li>
+            <li><a href="#">C9</a></li>
+            <li><a href="#">C6</a></li>
+          </ul>
+        </li>
+
+
+        <li class="dropdown-submenu"><a href="#">D</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Dm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Dma7</a></li>
+                <li><a href="#">Dm7</a></li>
+                <li><a href="#">Dm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">D7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">D7+5</a></li>
+                <li><a href="#">D7-5</a></li>
+                <li><a href="#">Dm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">D-</a></li>
+            <li><a href="#">D+</a></li>
+            <li><a href="#">D9</a></li>
+            <li><a href="#">D6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">E</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Em</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Ema7</a></li>
+                <li><a href="#">Em7</a></li>
+                <li><a href="#">Em6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">E7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">E7+5</a></li>
+                <li><a href="#">E7-5</a></li>
+                <li><a href="#">Em6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">E-</a></li>
+            <li><a href="#">E+</a></li>
+            <li><a href="#">E9</a></li>
+            <li><a href="#">E6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">F</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Fm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Fma7</a></li>
+                <li><a href="#">Fm7</a></li>
+                <li><a href="#">Fm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">F7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">F7+5</a></li>
+                <li><a href="#">F7-5</a></li>
+                <li><a href="#">Fm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">F-</a></li>
+            <li><a href="#">F+</a></li>
+            <li><a href="#">F9</a></li>
+            <li><a href="#">F6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">G</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Gm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Gma7</a></li>
+                <li><a href="#">Gm7</a></li>
+                <li><a href="#">Gm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">G7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">G7+5</a></li>
+                <li><a href="#">G7-5</a></li>
+                <li><a href="#">Gm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">G-</a></li>
+            <li><a href="#">G+</a></li>
+            <li><a href="#">G9</a></li>
+            <li><a href="#">G6</a></li>
+          </ul>
+        </li>
+        <li><a href="#">A</a></li>
+        <li><a href="#">H</a></li>
+        
+          </ul>
+        </li>
+      </ul>
+    </div>
+</body>
+
+
+
+
+
+
+
+
+<!--<div class="container">
+  <div class="row">
+    <h2>Multi level dropdown menu in Bootstrap 3</h2>
+    <hr>
+    <div class="dropdown">
+      <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#">
+                Dropdown <span class="caret"></span>
+            </a>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li class="dropdown-submenu"><a href="#">C</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Cm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Cma7</a></li>
+                <li><a href="#">Cm7</a></li>
+                <li><a href="#">Cm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">C7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">C7+5</a></li>
+                <li><a href="#">C7-5</a></li>
+                <li><a href="#">Cm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">C-</a></li>
+            <li><a href="#">C+</a></li>
+            <li><a href="#">C9</a></li>
+            <li><a href="#">C6</a></li>
+          </ul>
+        </li>
+
+
+        <li class="dropdown-submenu"><a href="#">D</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Dm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Dma7</a></li>
+                <li><a href="#">Dm7</a></li>
+                <li><a href="#">Dm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">D7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">D7+5</a></li>
+                <li><a href="#">D7-5</a></li>
+                <li><a href="#">Dm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">D-</a></li>
+            <li><a href="#">D+</a></li>
+            <li><a href="#">D9</a></li>
+            <li><a href="#">D6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">E</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Em</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Ema7</a></li>
+                <li><a href="#">Em7</a></li>
+                <li><a href="#">Em6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">E7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">E7+5</a></li>
+                <li><a href="#">E7-5</a></li>
+                <li><a href="#">Em6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">E-</a></li>
+            <li><a href="#">E+</a></li>
+            <li><a href="#">E9</a></li>
+            <li><a href="#">E6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">F</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Fm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Fma7</a></li>
+                <li><a href="#">Fm7</a></li>
+                <li><a href="#">Fm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">F7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">F7+5</a></li>
+                <li><a href="#">F7-5</a></li>
+                <li><a href="#">Fm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">F-</a></li>
+            <li><a href="#">F+</a></li>
+            <li><a href="#">F9</a></li>
+            <li><a href="#">F6</a></li>
+          </ul>
+        </li>
+        <li class="dropdown-submenu"><a href="#">G</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu"><a href="#">Gm</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Gma7</a></li>
+                <li><a href="#">Gm7</a></li>
+                <li><a href="#">Gm6</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a href="#">G7</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">G7+5</a></li>
+                <li><a href="#">G7-5</a></li>
+                <li><a href="#">Gm6</a></li>
+              </ul>
+            </li>
+            <li><a href="#">G-</a></li>
+            <li><a href="#">G+</a></li>
+            <li><a href="#">G9</a></li>
+            <li><a href="#">G6</a></li>
+          </ul>
+        </li>
+        <li><a href="#">A</a></li>
+        <li><a href="#">H</a></li>
+        
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>Рабочий выпадающий список
+</div>-->

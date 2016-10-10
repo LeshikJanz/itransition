@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">My table</div>
+        <table class="table table-striped table-hover table-bordered table-condensed">
+            <tr>
+                <th>Имя исполнителя</th>
+                <th><center>Количество подборов</center></th>
+                <th><center>Количество просмотров</center></th>
+            </tr>
+            @{
+                int i = 0;
+                foreach (var author in ViewBag.Authors)
+                {
+                <tr>
+                    <th><a href="/Home/Author/@author.AuthorId" style="text-align:center">@author.Name</a></th>
+                    <th style="text-align:center">@author.Songs.Count</th>
+                    <th style="text-align:center">@ViewBag.ViewCounts[i++]</th>
+                </tr>
+                }
+             }
+        </table>
+
+
+    </div>
+</div>

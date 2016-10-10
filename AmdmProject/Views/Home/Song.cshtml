@@ -1,0 +1,263 @@
+﻿
+@{
+    ViewBag.Title = "Song";
+}
+@{
+    Layout = null;
+}
+<head>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/jquery-ui.css" type="text/css" rel="stylesheet">
+    <!-- Bootstrap styling for Typeahead -->
+    <link href="~/Content/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
+    <!-- Tokenfield CSS -->
+    <link href="~/Content/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+    <!-- Docs CSS -->
+    <link href="~/Content/pygments-manni.css" type="text/css" rel="stylesheet">
+    <link href="~/Content/docs.css" type="text/css" rel="stylesheet">
+    <link href="~/Content/style.css" type="text/css" rel="stylesheet">
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-tokenfield.js"></script>
+
+
+    <script language="JavaScript">
+        function EditTextSong() {
+            document.getElementById("txtSong").setAttribute("contentEditable", true);
+
+            document.getElementById("txtSong").focus();
+        }
+        function SaveTextSong() {
+            var SongId = document.getElementById("idSong").innerText;
+            var Accords = document.getElementById("tokenfield-typeahead").value;
+            var oldSongLirycWithProhibitedSymols = document.getElementById("txtSong").innerText;
+            var i = 0;
+            var newSongLiryc = oldSongLirycWithProhibitedSymols;
+            while (i <= 1000) {
+                newSongLiryc = newSongLiryc.replace('<', '$');
+                i++;
+            }
+
+            $.post("@Url.Action("SaveChangesOfSong", "Home")", { songId: SongId, accords: Accords, SongValue: newSongLiryc })
+                .done(function () {
+                    alert("Сохранено");
+                })
+          .fail(function () {
+              alert("Ошибка");
+          });
+        }
+
+        $('#tokenfield').tokenfield({
+            autocomplete: {
+                source: ['red', 'blue', 'green', 'yellow', 'violet', 'brown', 'purple', 'black', 'white'],
+                delay: 100
+            },
+            showAutocompleteOnFocus: true
+        });
+    </script>
+
+</head>
+<body >
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <div style="padding: 5% 7% 7% 10%">
+
+
+
+
+            <h2>@ViewBag.singleSong.Name</h2>
+            id: <text id="idSong">@ViewBag.singleSong.SongId</text><br />
+            <h3>Группа @ViewBag.AuthorName</h3><br />
+
+            <h4>Аккорды из песни</h4>
+            @{
+                string accordList = "";
+                <div>
+                    @foreach (var accord in ViewBag.Accords)
+                    {
+                        <img src="@accord.Img64" alt="@accord.AccordName" />
+                        accordList += accord.AccordName.Substring(7) + ",";
+                    }
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="tokenfield form-control">
+                        <input size="100" type="text" class="form-control" id="tokenfield-typeahead" value="@accordList" />
+                    </div>
+                </div>
+            }
+
+            <script>
+                function addAccordToField(accordAddress) {
+                    var accordList = $('#tokenfield-typeahead').val() + accordAddress + ',';
+                    $('.form-control').val(accordList);
+                }
+            </script>
+
+            <br />
+            <div class="dropdown">
+                <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#">
+                    Выберите аккорд <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-submenu">
+                        <a id="accord" onclick=addAccordToField('C')>C</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('Cm')>Cm</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('Cma7')>Cma7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Cm7')>Cm7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Cm6')>Cm6</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('C7')>C7</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('C7+5')>C7+5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('C7-5')>C7-5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Cm6')>Cm6</a></li>
+                                </ul>
+                            </li>
+                            <li><a id="accord" onclick=addAccordToField('C-')>C-</a></li>
+                            <li><a id="accord" onclick=addAccordToField('C+')>C+</a></li>
+                            <li><a id="accord" onclick=addAccordToField('C9')>C9</a></li>
+                            <li><a id="accord" onclick=addAccordToField('C6')>C6</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown-submenu">
+                        <a id="accord" onclick=addAccordToField('D')>D</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('Dm')>Dm</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('Dma7')>Dma7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Dm7')>Dm7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Dm6')>Dm6</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('D7')>D7</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('D7+5')>D7+5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('D7-5')>D7-5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Dm6')>Dm6</a></li>
+                                </ul>
+                            </li>
+                            <li><a id="accord" onclick=addAccordToField('D-')>D-</a></li>
+                            <li><a id="accord" onclick=addAccordToField('D+')>D+</a></li>
+                            <li><a id="accord" onclick=addAccordToField('D9')>D9</a></li>
+                            <li><a id="accord" onclick=addAccordToField('D6')>D6</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown-submenu">
+                        <a id="accord" onclick=addAccordToField('E')>E</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('Em')>Em</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('Ema7')>Ema7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Em7')>Em7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Em6')>Em6</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('E7')>E7</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('E7+5')>E7+5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('E7-5')>E7-5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Em6')>Em6</a></li>
+                                </ul>
+                            </li>
+                            <li><a id="accord" onclick=addAccordToField('E-')>E-</a></li>
+                            <li><a id="accord" onclick=addAccordToField('E+')>E+</a></li>
+                            <li><a id="accord" onclick=addAccordToField('E9')>E9</a></li>
+                            <li><a id="accord" onclick=addAccordToField('E6')>E6</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a id="accord" onclick=addAccordToField('F')>F</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('Fm')>Fm</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('Fma7')>Fma7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Fm7')>Fm7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Fm6')>Fm6</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('F7')>F7</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('F7+5')>F7+5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('F7-5')>F7-5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Fm6')>Fm6</a></li>
+                                </ul>
+                            </li>
+                            <li><a id="accord" onclick=addAccordToField('F-')>F-</a></li>
+                            <li><a id="accord" onclick=addAccordToField('F+')>F+</a></li>
+                            <li><a id="accord" onclick=addAccordToField('F9')>F9</a></li>
+                            <li><a id="accord" onclick=addAccordToField('F6')>F6</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a id="accord" onclick=addAccordToField('G')>G</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('Gm')>Gm</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('Gma7')>Gma7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Gm7')>Gm7</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Gm6')>Gm6</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a id="accord" onclick=addAccordToField('G7')>G7</a>
+                                <ul class="dropdown-menu">
+                                    <li><a id="accord" onclick=addAccordToField('G7+5')>G7+5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('G7-5')>G7-5</a></li>
+                                    <li><a id="accord" onclick=addAccordToField('Gm6')>Gm6</a></li>
+                                </ul>
+                            </li>
+                            <li><a id="accord" onclick=addAccordToField('G-')>G-</a></li>
+                            <li><a id="accord" onclick=addAccordToField('G+')>G+</a></li>
+                            <li><a id="accord" onclick=addAccordToField('G9')>G9</a></li>
+                            <li><a id="accord" onclick=addAccordToField('G6')>G6</a></li>
+                        </ul>
+                    </li>
+                    <li><a onclick=addAccordToField('A')>A</a></li>
+                    <li><a onclick=addAccordToField('H')>H</a></li>
+
+                </ul>
+                </li>
+                </ul>
+            </div>
+
+            <br />
+            <INPUT TYPE="BUTTON" ONCLICK="EditTextSong()" VALUE="Редактировать">
+            <INPUT TYPE="BUTTON" ONCLICK="SaveTextSong()" VALUE="Сохранить"><BR>
+
+<pre id="txtSong" contenteditable="false" style="width:80%">@Html.Raw(ViewBag.singleSong.lyric)</pre>
+        </divstyle="padding:>
+        <!-- Элементы управления -->
+            @{ int previousSong = ViewBag.singleSong.SongId - 1;
+                int nextSong = ViewBag.singleSong.SongId + 1;
+        <a class="left carousel-control" href="/Home/Song/@previousSong" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="/Home/Song/@nextSong" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+
+
+        <p>@Ajax.ActionLink("Предыдущая композиция", "Song", new { id = previousSong }, new AjaxOptions { });</p>
+        <p>@Ajax.ActionLink("Следующая композиция", "Song", new { id = nextSong }, new AjaxOptions { });</p>
+
+
+
+            }
+</div>
+</body>
