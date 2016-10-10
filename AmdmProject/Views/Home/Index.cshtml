@@ -2,32 +2,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<ol class="breadcrumb">
-    <li class="breadcrumb-item active">Главная</li>
-</ol>
-
-<div class="container">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Список групп</div>
-        <table class="table table-striped table-hover table-bordered table-condensed">
-            <tr>
-                <th>@Html.ActionLink("Имя исполнителя", "Index", new { sortByNames = ViewBag.SortedByNames })</th>
-                <th><center>@Html.ActionLink("Количество подборов", "Index", new { sortByAccordSelection = ViewBag.SortedByAccordSelection })</center></th>
-                <th><center>@Html.ActionLink("Количество просмотров", "Index", new { sortByNumberOfView = ViewBag.SortedByNumberOfView })</center></th>
-            </tr>
-            @{
-                int i = 0;
-                foreach (var author in ViewBag.Authors)
-                {
+<script>$('document').ready(function () { $('#changeView').on('click', function () { window.location.reload();}) })</script>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Главная</li>
+    </ol>
+    <center id="changeView">@Html.ActionLink("Сменить вид(постраничный/полный)", "Index", new { fullPage = ViewBag.FullPage })</center>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Список групп</div>
+            <table class="table table-striped table-hover table-bordered table-condensed">
                 <tr>
-                    <th><a href="/Home/Author/@author.AuthorId" style="text-align:center">@author.Name</a></th>
-                    <th style="text-align:center">@author.Songs.Count</th>
-                    <th style="text-align:center">@ViewBag.ViewCounts[i++]</th>
+                    <th>@Html.ActionLink("Имя исполнителя", "Index", new { sortByNames = ViewBag.SortedByNames })</th>
+                    <th><center>@Html.ActionLink("Количество подборов", "Index", new { sortByAccordSelection = ViewBag.SortedByAccordSelection })</center></th>
+                    <th><center>@Html.ActionLink("Количество просмотров", "Index", new { sortByNumberOfView = ViewBag.SortedByNumberOfView })</center></th>
                 </tr>
-                }
-             }
-        </table>
+                @{
+                    int i = 0;
+                    if (ViewBag.FullPage == "false")
+                    {
+                        foreach (var author in ViewBag.Authors)
+                        {
+                            <tr>
+                                <th><a href="/Home/Author/@author.AuthorId" style="text-align:center">@author.Name</a></th>
+                                <th style="text-align:center">@author.Songs.Count</th>
+                                <th style="text-align:center">@ViewBag.ViewCounts[i++]</th>
+                            </tr>
+                        }
+                    } else {
+                        foreach (var author in Model)
+                        {
+                        <tr>
+                            <th><a href="/Home/Author/@author.AuthorId" style="text-align:center">@author.Name</a></th>
+                            <th style="text-align:center">@author.Songs.Count</th>
+                            <th style="text-align:center">@ViewBag.ViewCounts[i++]</th>
+                        </tr>
+                        }
+                    }
+                    }
+            </table>
 
-
+            
+        </div>
     </div>
-</div>
+
+<script>
+    function getNextPage(page)
+    {
+        window.location = '/Home/Index/?page=' + page + "&fullPage=False";
+    }
+    function getPrevPage(page) {
+        window.location = '/Home/Index/?page=' + page  + "&fullPage=False";
+    }
+</script>
+
+@{
+    int nextPage = ViewBag.pageNumber + 1;
+    int prevPage = ViewBag.pageNumber;
+    if (prevPage != 1)
+    {
+        prevPage = ViewBag.pageNumber - 1;
+    }
+    <center>
+        <input type="button" onclick="getPrevPage(@prevPage)" value="Предыдущая страница" />
+        <input type="button" onclick="getNextPage(@nextPage)" value="Следующая страница" />
+    </center>
+}
+

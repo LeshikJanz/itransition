@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using HtmlAgilityPack;
 using System.Text;
+using PagedList.Mvc;
+using PagedList;
 
 namespace AmdmProject.Controllers
 {
@@ -60,7 +62,7 @@ namespace AmdmProject.Controllers
             }
             };
 
-        public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView)
+        public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView, int? page, string fullPage)
         {
             connectTables();
             IEnumerable<Author> Authors = context.Authors;
@@ -129,7 +131,8 @@ namespace AmdmProject.Controllers
                 }
                 sortByNumberOfView = "";
                 ViewBag.SortedByNumberOfView = "False";
-                ViewBag.Authors = authorList;
+                Authors = authorList;
+                ViewBag.Authors = Authors;
                 ViewBag.ViewCounts = viewCounts;
             }
             else if (sortByNumberOfView == "False")
@@ -143,22 +146,44 @@ namespace AmdmProject.Controllers
                 }
                 sortByNumberOfView = "";
                 ViewBag.SortedByNumberOfView = "True";
-                ViewBag.Authors = authorList;
+                Authors = authorList;
+                ViewBag.Authors = Authors;
                 ViewBag.ViewCounts = viewCounts;
             }
+
             
+
             //ParseAuthorNamesAndBiographyLinks();
             //ParseAuthorBiographySongLinksAndSongNames();
             //GenerateAuthorListOfModels();
-            
+
             //SaveAuthorModelsToDb();
             //GenerateAccordsListOfModelsAndParseSongLyrics();
 
             //SaveAccordModelsToDb();
             //GenerateSongsListOfModels();
+            ViewBag.UsingPagedDirectives = "";
+            ViewBag.PagesButtons = "";
+            if (page == null) page = 1;
+            ViewBag.pageNumber = page;
 
+            if (fullPage == "True" || fullPage == null)
+            {
+                ViewBag.FullPage = "False";
+                return View(Authors);
+            }
+            else
+            {
+                ViewBag.FullPage = "True";
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                //return View(Authors);
+                IEnumerable<Author> myAuthors = Authors;
+                return View(myAuthors.OrderBy(k => k.AuthorId).ToPagedList(page ?? 1, 50));
+            }
 
-            return View();
+            
+            //return View(Authors.ToPagedList(pageNumber, pageSize));
         }
 
 
