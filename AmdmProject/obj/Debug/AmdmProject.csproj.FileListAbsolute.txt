@@ -140,3 +140,5 @@ C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProje
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.csproj.GenerateResource.Cache
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.dll
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.pdb
+C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\System.Net.Http.Formatting.dll
+C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\System.Net.Http.Formatting.xml

@@ -45,7 +45,7 @@ namespace AmdmProject.Controllers
         public ActionResult Index()
         {
             connectTables();
-
+            Console.WriteLine("Hello");
             IEnumerable<Author> Authors = context.Authors;
             IEnumerable<Song> Songs = context.Songs;
             ViewBag.Authors = Authors;
@@ -145,16 +145,17 @@ namespace AmdmProject.Controllers
             int id = Convert.ToInt32(songId);
             Song song = context.Songs.Find(id);
             List<Accord> Accords = new List<Accord>();
-            Author author = context.Authors.First();
-            //song.Accords = new List<Accord>();
+
+            song.Accords.Clear();
             //context.SaveChanges();
             foreach (var accordName in massAccords)
             {
                 var accordN = "Аккорд " + accordName;
                 Accord Accord = context.Accords.Where(a => a.AccordName == accordN).First();
-                Accords.Add(Accord);
-                //song.Accords.Add(Accord);
+                //Accords.Add(Accord);
+               // song.Accords.Add(Accord);
             }
+            context.SaveChanges();
             song.lyric = SongValue; // изменим название
             context.Entry(song).State = EntityState.Modified;
             context.SaveChanges();
