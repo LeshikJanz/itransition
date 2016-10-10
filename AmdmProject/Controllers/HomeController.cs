@@ -42,16 +42,68 @@ namespace AmdmProject.Controllers
                 .Include(x => x.Songs)
                 .ToList();
         }
-        public ActionResult Index()
+
+        struct NumberOfViewInEachAuthorId
+            {
+            int id;
+            public int numberOfView;
+
+            public int getId()
+            {
+                return id;
+            }
+
+            public NumberOfViewInEachAuthorId(int _id, int _numberOfView)
+            {
+                id = _id;
+                numberOfView = _numberOfView;
+            }
+            };
+
+        public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView)
         {
             connectTables();
-            Console.WriteLine("Hello");
             IEnumerable<Author> Authors = context.Authors;
+            ViewBag.SortedByNames = "True";
+            ViewBag.SortedByAccordSelection = "True";
+            ViewBag.SortedByNumberOfView = "True";
+            if (sortByNames == "True")
+            {
+                Authors = context.Authors.OrderBy(a => a.Name);
+                sortByNames = "";
+                ViewBag.SortedByNames = "False";
+            }
+            else if (sortByNames == "False")
+            {
+                Authors = context.Authors.OrderByDescending(a => a.Name);
+                sortByNames = "";
+                ViewBag.SortedByNames = "True";
+            }
+
+
+            if (sortByAccordSelection == "True")
+            {
+                Authors = context.Authors.OrderBy(a => a.Songs.Count);
+                sortByAccordSelection = "";
+                ViewBag.SortedByAccordSelection = "False";
+            }
+            else if (sortByAccordSelection == "False")
+            {
+                Authors = context.Authors.OrderByDescending(a => a.Songs.Count);
+                sortByAccordSelection = "";
+                ViewBag.SortedByAccordSelection = "True";
+            }
+
+            
+
+            Console.WriteLine("Hello");
             IEnumerable<Song> Songs = context.Songs;
             ViewBag.Authors = Authors;
             int[] viewCounts = new int[Authors.Count()];
             int i = 0;
-            foreach(var author in Authors) { 
+
+            List<NumberOfViewInEachAuthorId> numberOfViewInEachAuthorId = new List<NumberOfViewInEachAuthorId>();
+            foreach (var author in Authors) { 
                 {
                     int count = 0;
                      foreach(var song in author.Songs)
@@ -59,9 +111,42 @@ namespace AmdmProject.Controllers
                         count += song.NumberOfView;
                     }
                     viewCounts[i++] = count;
+                    NumberOfViewInEachAuthorId temp = new NumberOfViewInEachAuthorId(author.AuthorId, count);
+                    numberOfViewInEachAuthorId.Add(temp);
                 }
             }
             ViewBag.ViewCounts = viewCounts;
+
+            List<Author> authorList = new List<Author>();
+            if (sortByNumberOfView == "True")
+            {
+                i = 0;
+                numberOfViewInEachAuthorId = numberOfViewInEachAuthorId.OrderByDescending(n => n.numberOfView).ToList();
+                foreach (var numberOfViewInEachAuthor in numberOfViewInEachAuthorId)
+                {
+                    authorList.Add(context.Authors.Find(numberOfViewInEachAuthor.getId()));
+                    viewCounts[i++] = numberOfViewInEachAuthor.numberOfView;
+                }
+                sortByNumberOfView = "";
+                ViewBag.SortedByNumberOfView = "False";
+                ViewBag.Authors = authorList;
+                ViewBag.ViewCounts = viewCounts;
+            }
+            else if (sortByNumberOfView == "False")
+            {
+                i = 0;
+                numberOfViewInEachAuthorId = numberOfViewInEachAuthorId.OrderBy(n => n.numberOfView).ToList();
+                foreach (var numberOfViewInEachAuthor in numberOfViewInEachAuthorId)
+                {
+                    authorList.Add(context.Authors.Find(numberOfViewInEachAuthor.getId()));
+                    viewCounts[i++] = numberOfViewInEachAuthor.numberOfView;
+                }
+                sortByNumberOfView = "";
+                ViewBag.SortedByNumberOfView = "True";
+                ViewBag.Authors = authorList;
+                ViewBag.ViewCounts = viewCounts;
+            }
+            
             //ParseAuthorNamesAndBiographyLinks();
             //ParseAuthorBiographySongLinksAndSongNames();
             //GenerateAuthorListOfModels();
@@ -102,9 +187,16 @@ namespace AmdmProject.Controllers
                 {
                     songs.Add(song);
                 }
+            var sortedSongs = songs.OrderBy(s => s.Name);
+            songs = new List<Song>();
+            
+            foreach (Song s in sortedSongs)
+            {
+                songs.Add(s);
+            }
             if (sortByNames == "True")
             {
-                var sortedSongs = songs.OrderByDescending(s => s.Name);
+                sortedSongs = songs.OrderByDescending(s => s.Name);
                 songs = new List<Song>();
                 foreach (Song s in sortedSongs)
                 {
@@ -113,14 +205,13 @@ namespace AmdmProject.Controllers
             }
             if (sortByViews == "True")
             {
-                var sortedSongs = songs.OrderByDescending(s => s.NumberOfView);
+                sortedSongs = songs.OrderByDescending(s => s.NumberOfView);
                 songs = new List<Song>();
                 foreach (Song s in sortedSongs)
                 {
                     songs.Add(s);
                 }
             }
-
             ViewBag.Songs = songs;
             return View();
         }
@@ -137,28 +228,42 @@ namespace AmdmProject.Controllers
             return View();
         }
 
-        public bool SaveChangesOfSong(string songId, string accords, string SongValue)
+        public bool SaveChangesOfSong(string songId, string accords, string SongValue, string authorName)
         {
             SongValue = SongValue.Replace('$', '<');
             accords = accords.Substring(0, accords.Length - 1);
             var massAccords = accords.Split(',');
             int id = Convert.ToInt32(songId);
+
             Song song = context.Songs.Find(id);
             List<Accord> Accords = new List<Accord>();
-
+            Author author = context.Authors.Where(a => a.Name == authorName).First();
+            song.lyric = SongValue; // изменим название
+            song.Author = author;
             song.Accords.Clear();
-            //context.SaveChanges();
+            song = context.Songs.Find(id);
             foreach (var accordName in massAccords)
             {
                 var accordN = "Аккорд " + accordName;
                 Accord Accord = context.Accords.Where(a => a.AccordName == accordN).First();
-                //Accords.Add(Accord);
+                Accords.Add(Accord);
                // song.Accords.Add(Accord);
             }
-            context.SaveChanges();
-            song.lyric = SongValue; // изменим название
-            context.Entry(song).State = EntityState.Modified;
-            context.SaveChanges();
+            //context.SaveChanges();
+            song.Accords = Accords;
+            if (Accords.Capacity == song.Accords.Count)
+            {
+                context.Entry(song).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            else {
+                song.Accords.Clear();
+                Accords.Capacity = Accords.Capacity - 1;
+                song.Accords = Accords;
+                context.Entry(song).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            
             return true;
         }
 

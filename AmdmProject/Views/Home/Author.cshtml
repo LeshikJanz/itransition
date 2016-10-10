@@ -24,7 +24,6 @@
                 @{
                 <th><center>@Html.ActionLink("Название композиции", "Author", new { sortByNames = ViewBag.SortedByNames })</center></th>
                 <th><center>@Html.ActionLink("Количество просмотров", "Author", new { sortByViews = ViewBag.SortedByViews })</center></th>
-
                  }
             </tr>
             @foreach (var song in ViewBag.Songs)

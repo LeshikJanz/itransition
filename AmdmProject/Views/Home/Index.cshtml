@@ -11,9 +11,9 @@
         <div class="panel-heading">Список групп</div>
         <table class="table table-striped table-hover table-bordered table-condensed">
             <tr>
-                <th>Имя исполнителя</th>
-                <th><center>Количество подборов</center></th>
-                <th><center>Количество просмотров</center></th>
+                <th>@Html.ActionLink("Имя исполнителя", "Index", new { sortByNames = ViewBag.SortedByNames })</th>
+                <th><center>@Html.ActionLink("Количество подборов", "Index", new { sortByAccordSelection = ViewBag.SortedByAccordSelection })</center></th>
+                <th><center>@Html.ActionLink("Количество просмотров", "Index", new { sortByNumberOfView = ViewBag.SortedByNumberOfView })</center></th>
             </tr>
             @{
                 int i = 0;
