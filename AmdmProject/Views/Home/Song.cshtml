@@ -59,12 +59,13 @@
 
 </head>
 <body >
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index/">Главная</a></li>
+        <li class="breadcrumb-item"><a href="/Home/Author/@ViewBag.AuthorId">Автор</a></li>
+        <li class="breadcrumb-item active">Песни</li>
+    </ol>
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <div style="padding: 5% 7% 7% 10%">
-
-
-
-
+        <div style="padding: 2% 7% 7% 10%">
             <h2>@ViewBag.singleSong.Name</h2>
             id: <text id="idSong">@ViewBag.singleSong.SongId</text><br />
             <h3>Группа @ViewBag.AuthorName</h3><br />

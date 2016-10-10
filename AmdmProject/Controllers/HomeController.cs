@@ -132,6 +132,7 @@ namespace AmdmProject.Controllers
             Song song = context.Songs.Find(id);
             ViewBag.singleSong = song;
             ViewBag.Accords = song.Accords;
+            ViewBag.AuthorId = song.AuthorId;
             ViewBag.AuthorName = song.Author.Name;
             return View();
         }
