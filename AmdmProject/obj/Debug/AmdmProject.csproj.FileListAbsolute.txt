@@ -133,7 +133,6 @@ C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProje
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\ru\System.Web.WebPages.resources.dll
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\ru\System.Web.WebPages.Deployment.resources.dll
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\ru\System.Web.WebPages.Razor.resources.dll
-C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.csprojResolveAssemblyReference.cache
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.Migrations.InitialCreate.resources
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.Migrations.AddaccordLinkfieldtoAccordtable.resources
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.Migrations.ChangedaccordLinkfieldtoSongName.resources
