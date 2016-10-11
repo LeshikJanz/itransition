@@ -161,14 +161,14 @@ namespace ConsoleApplicationForMvcProject
                     }
                 }
             }
-            int t = 110; //
+            int t = 0; //
             int count = authorBiographyLinks.Count;
             for (int i = 0; i < count; i++)
             {                        t++;
                         if (t == 10) // каждые t песен задержка
                         {
                             System.Threading.Thread.Sleep(10000);
-                            //t = 0;
+                            t = 0;
                         }
                 htmlUrl = authorBiographyLinks[i];
                 HD = web.Load(htmlUrl);

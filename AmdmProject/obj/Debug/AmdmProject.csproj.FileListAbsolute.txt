@@ -156,3 +156,4 @@ C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProje
 C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Hangfire.SqlServer.xml
 C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\es\Hangfire.Core.resources.dll
 C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\zh\Hangfire.Core.resources.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\obj\Debug\AmdmProject.csprojResolveAssemblyReference.cache

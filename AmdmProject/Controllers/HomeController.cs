@@ -11,6 +11,7 @@ using PagedList.Mvc;
 using PagedList;
 using Hangfire;
 using System.Diagnostics;
+using System.Activities;
 
 namespace AmdmProject.Controllers
 {
@@ -388,29 +389,25 @@ namespace AmdmProject.Controllers
             Author author = context.Authors.Where(a => a.Name == authorName).First();
             song.lyric = SongValue; // изменим название
             song.Author = author;
-            song.Accords.Clear();
-            song = context.Songs.Find(id);
+            var existingSong = context.Songs.Include("Accords").Where(s => s.SongId == id).First();
             foreach (var accordName in massAccords)
             {
                 var accordN = "Аккорд " + accordName;
                 Accord Accord = context.Accords.Where(a => a.AccordName == accordN).First();
                 Accords.Add(Accord);
-               // song.Accords.Add(Accord);
             }
-            //context.SaveChanges();
-            song.Accords = Accords;
-            if (Accords.Capacity == song.Accords.Count)
+            var deletedAccords = song.Accords.ToList<Accord>();
+            var addedAccords = Accords.ToList<Accord>();
+            deletedAccords.ForEach(c => existingSong.Accords.Remove(c));
+            foreach (Accord c in addedAccords)
             {
-                context.Entry(song).State = EntityState.Modified;
-                context.SaveChanges();
+                if (context.Entry(c).State == EntityState.Detached)
+                    context.Accords.Attach(c);
+                existingSong.Accords.Add(c);
             }
-            else {
-                song.Accords.Clear();
-                Accords.Capacity = Accords.Capacity - 1;
-                song.Accords = Accords;
-                context.Entry(song).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+
+            //Сохранем в базу данных изменения
+            context.SaveChanges();
             
             return true;
         }
