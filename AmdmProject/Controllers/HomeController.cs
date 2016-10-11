@@ -318,52 +318,40 @@ namespace AmdmProject.Controllers
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
             Response.Cache.SetCacheability(HttpCacheability.Server);
             connectTables();
-            if (sortByNames == null || sortByNames == "False")
-            {
-                ViewBag.SortedByNames = "True";
-            }
-            else ViewBag.SortedByNames = "False";
-
-            if (sortByViews == null || sortByViews == "False")
-            {
-                ViewBag.SortedByViews = "True";
-            }
-            else ViewBag.SortedByViews = "False";
             Author author = context.Authors.Find(id);
             ViewBag.singleAuthor = author;
-            //if (sortBy == "views")
-            //{
-                List<Song> songs = new List<Song>();
-                List<Song> songsSorted = new List<Song>();
-            foreach (var song in author.Songs)
-                {
-                    songs.Add(song);
-                }
-            var sortedSongs = songs.OrderBy(s => s.Name);
-            songs = new List<Song>();
-            
-            foreach (Song s in sortedSongs)
-            {
-                songs.Add(s);
-            }
+            IEnumerable<Song> songs = author.Songs;
+
+            ViewBag.SortedByNames = "True";
+            ViewBag.SortedByViews = "True";
             if (sortByNames == "True")
             {
-                sortedSongs = songs.OrderByDescending(s => s.Name);
-                songs = new List<Song>();
-                foreach (Song s in sortedSongs)
-                {
-                    songs.Add(s);
-                }
+                songs = songs.OrderBy(a => a.Name);
+                sortByNames = "";
+                ViewBag.SortedByNames = "False";
             }
+            else if (sortByNames == "False")
+            {
+                songs = songs.OrderByDescending(a => a.Name);
+                sortByNames = "";
+                ViewBag.SortedByNames = "True";
+            }
+
             if (sortByViews == "True")
             {
-                sortedSongs = songs.OrderByDescending(s => s.NumberOfView);
-                songs = new List<Song>();
-                foreach (Song s in sortedSongs)
-                {
-                    songs.Add(s);
-                }
+                songs = songs.OrderBy(a => a.NumberOfView);
+                sortByNames = "";
+                ViewBag.SortedByViews = "False";
             }
+            else if (sortByViews == "False")
+            {
+                songs = songs.OrderByDescending(a => a.NumberOfView);
+                sortByNames = "";
+                ViewBag.SortedByViews = "True";
+            }
+
+            
+         
 
             using (StreamWriter sw = new StreamWriter(pathToFileWithSortedData, false, System.Text.Encoding.Default))
             {
@@ -385,12 +373,18 @@ namespace AmdmProject.Controllers
             connectTables();
             string[] massNames = new string[1000];
             int i = 0;
+            int sizeOfMass = 0;
             Song song;
             StreamReader sr = new StreamReader(pathToFileWithSortedData, System.Text.Encoding.Default);
                 while (true)
                 {
                     string temp = sr.ReadLine();
-                    if (temp == null) { sr.Close(); break; }
+                    if (temp == null)
+                {
+                    sr.Close();
+                    sizeOfMass = i;
+                    break;
+                }
                     massNames[i++] = temp;
                 }
 
@@ -399,16 +393,35 @@ namespace AmdmProject.Controllers
                 if (massNames[i] == songName) break;
             }
             IEnumerable<Song> songList = context.Songs;
-            if (flag == "0")
+            if (i == 0 || i == sizeOfMass)
             {
-                string prevSong = massNames[i - 1];
-                song = songList.Where(s => s.Name == prevSong).First();
+                song = context.Songs.Find(id);
+            }
+            else if (flag == "0")
+            {
+                if (songName == massNames[i - 1]) //Если имя у песни одинаковое, но подбор аккордов другой
+                {
+                    song = context.Songs.Find(id);
+                }else
+                {
+                    string prevSong = massNames[i - 1];
+                    song = songList.Where(s => s.Name == prevSong).First();
+                }
+                
             }
             else if (flag == "1")
             {
-                string nextSong = massNames[i + 1];
-                song = songList.Where(s => s.Name == nextSong).First();
-            }else
+                if (songName == massNames[i + 1]) 
+                {
+                    song = context.Songs.Find(id);
+                }
+                else
+                {
+                    string prevSong = massNames[i + 1];
+                    song = songList.Where(s => s.Name == prevSong).First();
+                }
+            }
+            else
             {
                 song = context.Songs.Find(id);
             }
