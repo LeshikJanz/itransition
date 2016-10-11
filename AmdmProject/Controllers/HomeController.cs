@@ -64,6 +64,8 @@ namespace AmdmProject.Controllers
 
         public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView, int? page, string fullPage)
         {
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
+            Response.Cache.SetCacheability(HttpCacheability.Server);
             connectTables();
             IEnumerable<Author> Authors = context.Authors;
             ViewBag.SortedByNames = "True";
@@ -190,6 +192,8 @@ namespace AmdmProject.Controllers
         [HttpGet]
         public ActionResult Author(int id, string sortByNames, string sortByViews)
         {
+            Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
+            Response.Cache.SetCacheability(HttpCacheability.Server);
             connectTables();
             if (sortByNames == null || sortByNames == "False")
             {
