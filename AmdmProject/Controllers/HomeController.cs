@@ -74,7 +74,7 @@ namespace AmdmProject.Controllers
 
         public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView, int? page, string fullPage)
         {
-            //ParseAuthorsSongsAccords(); // Uncomment This function for start parsing file
+            ParseAuthorsSongsAccords(); // Uncomment This function for start parsing file
 
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
             Response.Cache.SetCacheability(HttpCacheability.Server);
@@ -473,57 +473,43 @@ namespace AmdmProject.Controllers
         public List<string> ParseAuthorBiographySongLinksAndSongNames()
         {
 
-            string htmlUrl = "";
-
-            HtmlDocument HD = new HtmlDocument();
-            var web = new HtmlWeb
+            for (int i = 1; i <= 10; i++)
             {
-                AutoDetectEncoding = false,
-                OverrideEncoding = Encoding.UTF8,
-            };
-
-            int t = 0;
-            foreach (var authorLink in authorBiographyLinks)
-            {
-                t++;
-                if (t == 10)
-                {
-                    System.Threading.Thread.Sleep(10000);
-                    t = 0;
-                }
-                htmlUrl = authorLink;
+                htmlUrl = "http://amdm.ru/chords/page" + i;
                 HD = web.Load(htmlUrl);
-                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//div[@class='artist-profile__bio']");
-                HtmlNodeCollection NoAltElements2 = HD.DocumentNode.SelectNodes("//td/a[@class='g-link']");
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//td[@class='artist_name']/a");
+                HtmlNodeCollection NoAltElements2 = HD.DocumentNode.SelectNodes("//td/a[@href]");
                 if (NoAltElements != null)
                 {
-                    bool flag = true; //выбираем каждый второй
+                    int j = 1; //счетчик количества песен на странице
                     foreach (HtmlNode HN in NoAltElements)
                     {
-                        string outputText = HN.InnerText;
+                        if (HN.InnerHtml == "RinaOnish") break;
+                        authorNames.Add(HN.InnerText); //добавление имени в список
+                        j++;
+                    }
+                    int n = j;
+                    j = 1;
+                    bool flag = true; //выбираем каждый второй
+                    foreach (HtmlNode HN in NoAltElements2)
+                    {
+                        string outputText = "http:" + HN.Attributes["href"].Value;
                         if (flag) // считываем каждый второй
                         {
-                            authorBiography.Add(outputText); //добавление имени в список
+                            if (j == n) break;
+                            authorBiographyLinks.Add(outputText); //добавление имени в список
                             flag = false;
+                            j++;
                             continue;
                         }
                         flag = true;
                     }
                 }
-
-                if (NoAltElements2 != null)
-                {
-                    foreach (HtmlNode HN in NoAltElements2)
-                    {
-                        string outputText = "http:" + HN.Attributes["href"].Value;
-                        songLinks.Add(outputText); //добавление имени в список
-                        outputText = HN.InnerHtml;
-                        songNames.Add(outputText);
-                    }
-                }
             }
-            return authorBiography;
+            return authorBiographyLinks;
         }
+
+
 
         public List<string> ParseAuthorNamesAndBiographyLinks()
         {
