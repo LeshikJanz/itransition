@@ -146,3 +146,14 @@ C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProje
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\PagedList.Mvc.dll
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\PagedList.xml
 C:\Users\a2.tereshko\Documents\visual studio 2015\Projects\AmdmProject\AmdmProject\bin\PagedList.Mvc.xml
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Microsoft.Owin.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Owin.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Microsoft.Owin.xml
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Hangfire.Core.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Hangfire.SqlServer.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Hangfire.Core.xml
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\Hangfire.SqlServer.xml
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\es\Hangfire.Core.resources.dll
+C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\bin\zh\Hangfire.Core.resources.dll

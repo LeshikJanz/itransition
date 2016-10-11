@@ -1,0 +1,1 @@
+c:\users\a2.tereshko\documents\visual studio 2015\Projects\ConsoleApplicationForMvcProject\ConsoleApplicationForMvcProject\bin\Debug\ConsoleApplicationForMvcProject.exe.config

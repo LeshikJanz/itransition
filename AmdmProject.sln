@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmdmProject", "AmdmProject\AmdmProject.csproj", "{F248899C-A3D7-4C21-8A07-5AB102B7E1E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplicationForMvcProject", "ConsoleApplicationForMvcProject\ConsoleApplicationForMvcProject\ConsoleApplicationForMvcProject.csproj", "{3E01BD0C-EAFB-462A-A718-912EDA9F9A44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F248899C-A3D7-4C21-8A07-5AB102B7E1E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F248899C-A3D7-4C21-8A07-5AB102B7E1E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F248899C-A3D7-4C21-8A07-5AB102B7E1E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E01BD0C-EAFB-462A-A718-912EDA9F9A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E01BD0C-EAFB-462A-A718-912EDA9F9A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E01BD0C-EAFB-462A-A718-912EDA9F9A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E01BD0C-EAFB-462A-A718-912EDA9F9A44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

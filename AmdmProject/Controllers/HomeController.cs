@@ -9,6 +9,8 @@ using HtmlAgilityPack;
 using System.Text;
 using PagedList.Mvc;
 using PagedList;
+using Hangfire;
+using System.Diagnostics;
 
 namespace AmdmProject.Controllers
 {
@@ -30,6 +32,14 @@ namespace AmdmProject.Controllers
         List<Author> authors = new List<Author>();
         List<Song> songs = new List<Song>();
         List<Accord> accords = new List<Accord>();
+
+        string htmlUrl = "";
+        HtmlDocument HD = new HtmlDocument();
+        HtmlWeb web = new HtmlWeb
+        {
+            AutoDetectEncoding = false,
+            OverrideEncoding = Encoding.UTF8,
+        };
 
         public void connectTables()
         {
@@ -64,6 +74,8 @@ namespace AmdmProject.Controllers
 
         public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView, int? page, string fullPage)
         {
+            //ParseAuthorsSongsAccords(); // Uncomment This function for start parsing file
+
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
             Response.Cache.SetCacheability(HttpCacheability.Server);
             connectTables();
@@ -98,9 +110,6 @@ namespace AmdmProject.Controllers
                 ViewBag.SortedByAccordSelection = "True";
             }
 
-            
-
-            Console.WriteLine("Hello");
             IEnumerable<Song> Songs = context.Songs;
             ViewBag.Authors = Authors;
             int[] viewCounts = new int[Authors.Count()];
@@ -188,6 +197,127 @@ namespace AmdmProject.Controllers
             //return View(Authors.ToPagedList(pageNumber, pageSize));
         }
 
+        public void ParseAuthorsSongsAccords()
+        {
+            ParseAuthorBiographySongLinksAndSongNames();
+
+            htmlUrl = "";
+
+            int count = authorBiographyLinks.Count;
+            for (int i = 0; i < count; i++)
+            {
+
+                string author_Biography = "";
+                htmlUrl = authorBiographyLinks[i];
+                HD = web.Load(htmlUrl);
+                HtmlNodeCollection NoAltElements = HD.DocumentNode.SelectNodes("//div[@class='artist-profile__bio']");
+                HtmlNodeCollection NoAltElements2 = HD.DocumentNode.SelectNodes("//td/a[@class='g-link']");
+                if (NoAltElements != null)
+                {
+                    bool flag = true; //выбираем каждый второй
+                    foreach (HtmlNode HN in NoAltElements)
+                    {
+                        string outputText = HN.InnerText;
+                        if (flag) // считываем каждый второй
+                        {
+                            authorBiography.Add(outputText); //добавление имени в список
+                            author_Biography = outputText;
+                            flag = false;
+                            continue;
+                        }
+                        flag = true;
+                    }
+                }
+                Author author = new Author();
+                // author.AuthorId = i;
+                author.Name = authorNames[i];
+                author.Biography = author_Biography;
+                author.LinkOfBiography = authorBiographyLinks[i];
+                authors.Add(author);
+
+                if (NoAltElements2 != null)
+                {
+                    int t = 0;
+                    foreach (HtmlNode HN in NoAltElements2)
+                    {
+                        t++;
+                        if (t == 10) // каждые t песен задержка
+                        {
+                            System.Threading.Thread.Sleep(20000);
+                            t = 0;
+                        }
+                        string outputText = "http:" + HN.Attributes["href"].Value;
+                        songLinks.Add(outputText); //добавление имени в список
+                        string song_LinkOfSong = outputText;
+                        outputText = HN.InnerHtml;
+                        songNames.Add(outputText);
+                        string song_Name = outputText;
+                        string song_lyric = "";
+                        //----------------------------
+                        htmlUrl = "";
+                        // HtmlDocument HDP = new HtmlDocument();
+                        web = new HtmlWeb
+                        {
+                            AutoDetectEncoding = false,
+                            OverrideEncoding = Encoding.UTF8,
+                        };
+                        HD = web.Load(song_LinkOfSong);
+                        List<Accord> accordsOfOneAuthor = new List<Accord>();
+                        HtmlNodeCollection NoAltElements3 = HD.DocumentNode.SelectNodes("//div[@id='song_chords']/img");
+                        HtmlNodeCollection NoAltElements4 = HD.DocumentNode.SelectNodes("//div/pre");
+                        if (NoAltElements3 != null)
+                        {
+
+                            foreach (HtmlNode HN3 in NoAltElements3)
+                            {
+                                Accord accordSearch = null;
+                                string accord_Name = HN3.Attributes["alt"].Value;
+                                if (accords.Count > 0) accordSearch = accords.Find(a => a.AccordName == accord_Name);//Where(a => a.AccordName == accord_Name).First();
+                                if (accordSearch == null)
+                                {
+                                    Accord accord = new Accord();
+                                    accord.AccordName = accord_Name;
+                                    accord.Img64 = "http:" + HN3.Attributes["src"].Value;
+                                    //   accord.AccordId = j++;
+                                    accords.Add(accord);
+                                    accordSearch = accord;
+                                }
+                                accordsOfOneAuthor.Add(accordSearch);
+                            }
+                        }
+
+                        if (NoAltElements4 != null)
+                        {
+                            bool flag = true; //выбираем каждый второй
+                            foreach (HtmlNode HN4 in NoAltElements4)
+                            {
+                                outputText = HN4.InnerHtml;
+                                if (flag) // считываем каждый второй
+                                {
+                                    songLyrics.Add(outputText); //добавление имени в список
+                                    song_lyric = outputText;
+                                    flag = false;
+                                    continue;
+                                }
+                                flag = true;
+                            }
+                        }
+                        Song song = new Song();
+                        song.Name = song_Name;
+                        song.LinkOfSong = song_LinkOfSong;
+                        song.lyric = song_lyric;
+                        song.Author = author;
+                        song.Accords = accordsOfOneAuthor;
+                        songs.Add(song);
+                        //----------------------------
+                    }
+                }
+            }
+            //----------------------------------------------------
+            SaveAuthorModelsToDb();
+            SaveAccordModelsToDb();
+            SaveSongModelsToDb();
+        }
 
         [HttpGet]
         public ActionResult Author(int id, string sortByNames, string sortByViews)
@@ -296,9 +426,6 @@ namespace AmdmProject.Controllers
             return true;
         }
 
-
-
-
         public void SaveAuthorModelsToDb()
         {
             foreach (var author in authors)
@@ -316,6 +443,16 @@ namespace AmdmProject.Controllers
                 context.SaveChanges();
             }
         }
+
+        public void SaveSongModelsToDb()
+        {
+            foreach (var song in songs)
+            {
+                context.Songs.Add(song);
+                context.SaveChanges();
+            }
+        }
+
 
         public List<Author> GenerateAuthorListOfModels()
         {
