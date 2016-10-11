@@ -412,7 +412,10 @@ namespace AmdmProject.Controllers
             {
                 song = context.Songs.Find(id);
             }
-            
+            song.NumberOfView = song.NumberOfView + 1;
+            context.Entry(song).State = EntityState.Modified;
+            context.SaveChanges();
+
             ViewBag.singleSong = song;
             ViewBag.Accords = song.Accords;
             ViewBag.AuthorId = song.AuthorId;
