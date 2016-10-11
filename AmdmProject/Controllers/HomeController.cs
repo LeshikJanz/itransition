@@ -74,7 +74,7 @@ namespace AmdmProject.Controllers
 
         public ActionResult Index(string sortByNames, string sortByAccordSelection, string sortByNumberOfView, int? page, string fullPage)
         {
-            ParseAuthorsSongsAccords(); // Uncomment This function for start parsing file
+           // ParseAuthorsSongsAccords(); // Uncomment This function to start parsing site
 
             Response.Cache.SetExpires(DateTime.Now.AddSeconds(30));
             Response.Cache.SetCacheability(HttpCacheability.Server);
@@ -162,17 +162,6 @@ namespace AmdmProject.Controllers
                 ViewBag.ViewCounts = viewCounts;
             }
 
-            
-
-            //ParseAuthorNamesAndBiographyLinks();
-            //ParseAuthorBiographySongLinksAndSongNames();
-            //GenerateAuthorListOfModels();
-
-            //SaveAuthorModelsToDb();
-            //GenerateAccordsListOfModelsAndParseSongLyrics();
-
-            //SaveAccordModelsToDb();
-            //GenerateSongsListOfModels();
             ViewBag.UsingPagedDirectives = "";
             ViewBag.PagesButtons = "";
             if (page == null) page = 1;
