@@ -28,8 +28,9 @@
             </tr>
             @foreach (var song in ViewBag.Songs)
             {
+                string flag = "2", songName = "null";
                 <tr>
-                    <th><a href="/Home/Song/@song.SongId" style="text-align:center">@song.Name</a></th>
+                    <th><a href="/Home/Song?id=@song.SongId&flag=@flag&songName=@songName" style="text-align:center">@song.Name</a></th>
                     <th style="text-align:center">@song.NumberOfView</th>
                 </tr>
             }

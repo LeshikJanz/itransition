@@ -12,6 +12,7 @@ using PagedList;
 using Hangfire;
 using System.Diagnostics;
 using System.Activities;
+using System.IO;
 
 namespace AmdmProject.Controllers
 {
@@ -41,6 +42,8 @@ namespace AmdmProject.Controllers
             AutoDetectEncoding = false,
             OverrideEncoding = Encoding.UTF8,
         };
+
+        string pathToFileWithSortedData = @"C:\Users\a2.tereshko\Documents\Visual Studio 2015\Projects\AmdmProject\AmdmProject\SongNamesSorted.txt";
 
         public void connectTables()
         {
@@ -361,15 +364,55 @@ namespace AmdmProject.Controllers
                     songs.Add(s);
                 }
             }
+
+            using (StreamWriter sw = new StreamWriter(pathToFileWithSortedData, false, System.Text.Encoding.Default))
+            {
+                foreach (var song in songs)
+                {
+                    sw.WriteLine(song.Name);
+                }
+                if (sw != null)
+                    sw.Close();
+            }
             ViewBag.Songs = songs;
             return View();
         }
 
+
         [HttpGet]
-        public ActionResult Song(int id)
+        public ActionResult Song(int id, string flag, string songName)
         {
             connectTables();
-            Song song = context.Songs.Find(id);
+            string[] massNames = new string[1000];
+            int i = 0;
+            Song song;
+            StreamReader sr = new StreamReader(pathToFileWithSortedData, System.Text.Encoding.Default);
+                while (true)
+                {
+                    string temp = sr.ReadLine();
+                    if (temp == null) { sr.Close(); break; }
+                    massNames[i++] = temp;
+                }
+
+            for( i = 0; i < 1000; i++)
+            {
+                if (massNames[i] == songName) break;
+            }
+            IEnumerable<Song> songList = context.Songs;
+            if (flag == "0")
+            {
+                string prevSong = massNames[i - 1];
+                song = songList.Where(s => s.Name == prevSong).First();
+            }
+            else if (flag == "1")
+            {
+                string nextSong = massNames[i + 1];
+                song = songList.Where(s => s.Name == nextSong).First();
+            }else
+            {
+                song = context.Songs.Find(id);
+            }
+            
             ViewBag.singleSong = song;
             ViewBag.Accords = song.Accords;
             ViewBag.AuthorId = song.AuthorId;

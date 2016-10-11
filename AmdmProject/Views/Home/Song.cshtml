@@ -247,16 +247,17 @@
         <!-- Элементы управления -->
             @{ int previousSong = ViewBag.singleSong.SongId - 1;
                 int nextSong = ViewBag.singleSong.SongId + 1;
-        <a class="left carousel-control" href="/Home/Song/@previousSong" data-slide="prev">
+                string flagNext = "1", flagPrev = "0", songName = ViewBag.singleSong.Name;
+        <a class="left carousel-control" href="/Home/Song?id=@previousSong&flag=@flagPrev&songName=@songName" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left"></span>
         </a>
-        <a class="right carousel-control" href="/Home/Song/@nextSong" data-slide="next">
+        <a class="right carousel-control" href="/Home/Song?id=@nextSong&flag=@flagNext&songName=@songName" data-slide="next">
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
 
 
-        <p>@Ajax.ActionLink("Предыдущая композиция", "Song", new { id = previousSong }, new AjaxOptions { });</p>
-        <p>@Ajax.ActionLink("Следующая композиция", "Song", new { id = nextSong }, new AjaxOptions { });</p>
+        <p>@Ajax.ActionLink("Предыдущая композиция", "Song", new {id = previousSong, flag = "0", songName = ViewBag.singleSong.Name }, new AjaxOptions { });</p>
+        <p>@Ajax.ActionLink("Следующая композиция", "Song", new { id = nextSong, flag = "1", songName = ViewBag.singleSong.Name }, new AjaxOptions { });</p>
             }
             
 </div>
